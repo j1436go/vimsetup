@@ -12,8 +12,6 @@ syntax on
 set guifont=Source\ Code\ Pro\ for\ Powerline:h12
 " enable plugins for specific filetypes
 filetype indent plugin on
-" show the line we're currently in
-set cursorline
 set notimeout ttimeout ttimeoutlen=200
 " keep cursor in the same column
 set nostartofline
@@ -30,38 +28,34 @@ set tabstop=4
 set omnifunc=syntaxcomplete#Complete
 " enable line numbers
 set number
-" set relative numbers in insert mode
-" autocmd InsertEnter * :set number
-" autocmd InsertLeave * :set relativenumber
 " execute search as i type
 set incsearch
 " highlight all matches
 set hlsearch
 " case insensitive search
 set ignorecase
-" Override the 'ignorecase' option if the search pattern contains upper case characters
+" keep cursor centered all of the time
+set scrolloff=999
+" override the 'ignorecase' option if the search pattern contains upper case characters
 set smartcase
-" always habe a status line
+" always have a status line
 set laststatus=2
 " map leader to space
-let mapleader = " "
-" use map leader w,q to quickly save and exit files
+let mapleader = "0"
+" shotcut for writing
 nnoremap <Leader>w :w<CR>
+" shortcut for quitting
 nnoremap <Leader>q :q<CR>
+" shortcut for opening the explorer
 nnoremap <Leader>e :Explore<CR>
+" shortcut for commandT fuzzy search
 nnoremap <Leader>r :CommandT<CR>
+" shortcut for  emmet completion
 let g:user_emmet_leader_key='<Leader><Tab>'
 " use jk to leave insert mode
 ino jk <Esc>
 " map colon to comma
 nnoremap , :
-" autocmd FileType javascript set omnifunc=javascriptcomplete#CompleteJS
-" autocmd FileType html set omnifunc=htmlcomplete#CompleteTags
-" autocmd FileType less set omnifunc=csscomplete#CompleteCSS
-" autocmd FileType css set omnifunc=csscomplete#CompleteCSS
-" open NERDTree on every launch
-" autocmd vimenter * if !argc() | NERDTree | endif
-autocmd VimEnter *  Tagbar
 " change backup directories to ~/.vim
 set backupdir=~/.vim/backup//
 set directory=~/.vim/swap//
@@ -71,5 +65,8 @@ map ö [
 map ä ]
 map Ö {
 map Ä }
-" GO specifig settings
+" GO specific settings
 let g:go_fmt_command = "goimports"
+" Sniputil completion and navigation
+let g:UltiSnipsExpandTrigger = "<Leader>a"
+let g:UltiSnipsJumpForwardTrigger = "<Leader>a"
