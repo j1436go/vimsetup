@@ -6,12 +6,12 @@ set hidden
 set visualbell
 " show command in the last line of vim
 set showcmd
-" syntax highlighting
-syntax on
-" font setting
-set guifont=Source\ Code\ Pro\ for\ Powerline:h12
-" enable plugins for specific filetypes
+" start on same line with indentation
+inoremap <C-Return> <CR><CR><C-o>k<Tab>
+" enable indentation and plugins for specific filetypes
 filetype indent plugin on
+" disable syntax highlighting
+syntax on
 set notimeout ttimeout ttimeoutlen=200
 " keep cursor in the same column
 set nostartofline
@@ -30,6 +30,8 @@ set omnifunc=syntaxcomplete#Complete
 set number
 " execute search as i type
 set incsearch
+" no special rendering (underline, italic) for html
+let html_no_rendering=1
 " highlight all matches
 set hlsearch
 " case insensitive search
@@ -65,8 +67,23 @@ map ö [
 map ä ]
 map Ö {
 map Ä }
-" GO specific settings
+" tagbar toggle
+nmap <Leader>t :TagbarToggle<CR>
+" go-vim specific settings
 let g:go_fmt_command = "goimports"
+let g:go_auto_type_info=0
+au FileType go nmap gr <Plug>(go-run)
+au FileType go nmap gi <Plug>(go-implements)
+au FileType go nmap gb <Plug>(go-build)
+au FileType go nmap gt <Plug>(go-test)
+au FileType go nmap gt <Plug>(go-test)
+au FileType go nmap gi <Plug>(go-implements)
 " Sniputil completion and navigation
 let g:UltiSnipsExpandTrigger = "<Leader>a"
 let g:UltiSnipsJumpForwardTrigger = "<Leader>a"
+" indentation for blade files
+autocmd BufNewFile,BufRead *.blade.php set ft=html | set ft=phtml | set ft=blade
+" ignore directives for command t plugin
+let g:CommandTWildIgnore=&wildignore . "**/bower_components/*,**/node_modules/*,**/vendor/*,**/components/*"
+" neocomplete config
+source ~/.vim/.neocomplete

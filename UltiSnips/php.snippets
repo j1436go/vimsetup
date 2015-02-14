@@ -1,0 +1,23 @@
+priority 10
+
+snippet f "Function without access modifier"
+function ${1:name}(${2:$param}) {
+	${3:return;}
+}
+endsnippet
+
+snippet fpu "Public function"
+public function ${1:name}(${2:$param}) {
+	${3:return;}
+}
+endsnippet
+
+snippet fpr "Private function"
+private function ${1:name}(${2:$param}) {
+	${3:return;}
+}
+endsnippet
+
+snippet dd "var_dump"
+var_dump(${1:$var});
+endsnippet
