@@ -1,7 +1,7 @@
 priority 10
 
 snippet newpackage "Scaffolds an new main file for a package." b
-package ${1:name}
+package ${1:main}
 
 import (
 	"${2:fmt}"
@@ -10,4 +10,11 @@ import (
 func main() {
 	${3}
 }
+endsnippet
+
+snippet errc "Checks and logs error"
+if err != nil {
+	log.Println(err)
+}
+${1}
 endsnippet
