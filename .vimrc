@@ -1,7 +1,6 @@
 set nocompatible
 " load all bundles located in ~/vim/bundle
 execute pathogen#infect()
-set hidden
 " use visual notification instead of beep
 set visualbell
 " show command in the last line of vim
@@ -9,16 +8,12 @@ set showcmd
 " start on same line with indentation
 inoremap <C-Return> <CR><CR><C-o>k<Tab>
 " enable indentation and plugins for specific filetypes
-filetype indent plugin on
-" disable syntax highlighting
-syntax on
+filetype plugin indent on
 set notimeout ttimeout ttimeoutlen=200
 " keep cursor in the same column
 set nostartofline
 " switch between paste mode with F2
 set pastetoggle=<F2>
-set autoindent
-set smartindent
 " set t_Co=256
 " enable the sharing of osx's and vim's clipboard
 set clipboard=unnamed
@@ -37,7 +32,7 @@ set hlsearch
 " case insensitive search
 set ignorecase
 " keep cursor centered all of the time
-set scrolloff=999
+set scrolloff=10
 " override the 'ignorecase' option if the search pattern contains upper case characters
 set smartcase
 " always have a status line
@@ -87,3 +82,8 @@ autocmd BufNewFile,BufRead *.blade.php set ft=html | set ft=phtml | set ft=blade
 let g:CommandTWildIgnore=&wildignore . "**/bower_components/*,**/node_modules/*,**/vendor/*,**/components/*"
 " neocomplete config
 source ~/.vim/.neocomplete
+" disable syntax highlighting. has to be used in au to overwrite macvim default.
+au VimEnter * syntax off
+au FileType * set autoindent
+" smartindent is off for now 
+" au FileType * set smartindent
