@@ -6,6 +6,9 @@ execute pathogen#infect()
 " use visual notification instead of beep
 set visualbell
 
+" activate syntax specific indentation and highlighting
+syntax on
+
 " default font
 set guifont=Source\ Code\ Pro\ Extralight:h13
 
