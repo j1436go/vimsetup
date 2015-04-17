@@ -12,8 +12,7 @@ set guifont=Source\ Code\ Pro\ Extralight:h13
 " show command in the last line of vim
 set showcmd
 
-" enable indentation and plugins for specific filetypes
-filetype plugin indent on
+filetype plugin on
 
 set notimeout ttimeout ttimeoutlen=200
 
@@ -133,7 +132,10 @@ source ~/.vim/.neocomplete
 
 " these need to direvtives need to be executed as autocmd since they override
 " macvim defaults.
+
 " disable syntax highlighting. 
 au VimEnter * syntax off
+
 au VimEnter * set autoindent
+
 au VimEnter * set smartindent
