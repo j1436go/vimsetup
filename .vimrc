@@ -137,5 +137,5 @@ let g:CommandTWildIgnore=&wildignore . "**/bower_components/*,**/node_modules/*,
 " neocomplete config
 source ~/.vim/.neocomplete
 
-" these need to direvtives need to be executed as autocmd since they override
-" macvim defaults.
+" this prevents vim from freezing when scrolling out of bounds 
+set noeb vb t_vb=
