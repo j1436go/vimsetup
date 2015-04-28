@@ -1,7 +1,42 @@
 set nocompatible
+" for vundle
+filetype off
 
-" load all bundles located in ~/vim/bundle
-execute pathogen#infect()
+
+" set the runtime path to include Vundle and initialize
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+
+
+Plugin 'gmarik/Vundle.vim'
+Plugin 'wincent/command-t'
+Plugin 'rking/ag.vim'
+Plugin 'editorconfig/editorconfig-vim'
+Plugin 'mattn/emmet-vim'
+Plugin 'othree/html5.vim'
+Plugin 'vim-scripts/matchit.zip'
+Plugin 'Shougo/neocomplete.vim'
+Plugin 'scrooloose/syntastic'
+Plugin 'majutsushi/tagbar'
+Plugin 'SirVer/ultisnips'
+Plugin 'xsbeats/vim-blade'
+Plugin 'tpope/vim-fugitive'
+Plugin 'fatih/vim-go'
+Plugin 'groenewege/vim-less'
+" extreme slow down
+"Plugin 'jeffkreeftmeijer/vim-numbertoggle'
+"Plugin 'Lokaltog/vim-powerline'
+Plugin 'tpope/vim-repeat'
+Plugin 'honza/vim-snippets'
+Plugin 'tpope/vim-surround'
+Plugin 'dhruvasagar/vim-table-mode'
+Plugin 'othree/yajs.vim'
+
+
+" All of your Plugins must be added before the following line
+call vundle#end()            
+filetype plugin indent on
+
 
 " use visual notification instead of beep
 set visualbell
@@ -9,17 +44,20 @@ set visualbell
 " activate syntax specific indentation and highlighting
 syntax on
 
+" use 256 colors in terminal
+"set t_Co=256
+
+" extend the color scheme's background to the whole terminal
+set t_ut=
+
 " indentation
 set autoindent
 set smartindent
 
-" default font
-set guifont=Source\ Code\ Pro\ Extralight:h13
-
 " show command in the last line of vim
 set showcmd
 
-filetype plugin on
+filetype plugin indent on
 
 set notimeout ttimeout ttimeoutlen=200
 
@@ -136,6 +174,9 @@ let g:CommandTWildIgnore=&wildignore . "**/bower_components/*,**/node_modules/*,
 
 " neocomplete config
 source ~/.vim/.neocomplete
+
+" dont highlight cursor line
+set nocursorline
 
 " this prevents vim from freezing when scrolling out of bounds 
 set noeb vb t_vb=
