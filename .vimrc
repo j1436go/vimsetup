@@ -23,9 +23,6 @@ Plugin 'xsbeats/vim-blade'
 Plugin 'tpope/vim-fugitive'
 Plugin 'fatih/vim-go'
 Plugin 'groenewege/vim-less'
-" extreme slow down
-"Plugin 'jeffkreeftmeijer/vim-numbertoggle'
-"Plugin 'Lokaltog/vim-powerline'
 Plugin 'tpope/vim-repeat'
 Plugin 'honza/vim-snippets'
 Plugin 'tpope/vim-surround'
@@ -171,6 +168,9 @@ autocmd BufNewFile,BufRead *.blade.php set ft=html | set ft=phtml | set ft=blade
 
 " ignore directives for command t plugin
 let g:CommandTWildIgnore=&wildignore . "**/bower_components/*,**/node_modules/*,**/vendor/*,**/components/*"
+
+" enable neocomplete
+let g:neocomplete#enable_at_startup = 1
 
 " neocomplete config
 source ~/.vim/.neocomplete
