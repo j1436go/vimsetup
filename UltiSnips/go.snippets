@@ -18,3 +18,9 @@ if err != nil {
 }
 ${1}
 endsnippet
+
+snippet hhandler "An http handler"
+func ${1}(w http.ResponseWriter, r *http.Request) {
+	w.Write(${2})
+}
+endsnippet

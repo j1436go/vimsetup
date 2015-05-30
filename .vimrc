@@ -9,7 +9,6 @@ call vundle#begin()
 
 
 Plugin 'gmarik/Vundle.vim'
-Plugin 'wincent/command-t'
 Plugin 'rking/ag.vim'
 Plugin 'editorconfig/editorconfig-vim'
 Plugin 'mattn/emmet-vim'
@@ -34,6 +33,8 @@ Plugin 'othree/yajs.vim'
 call vundle#end()            
 filetype plugin indent on
 
+" FZF fuzzy finder
+set rtp+=~/.fzf
 
 " use visual notification instead of beep
 set visualbell
@@ -117,9 +118,6 @@ nnoremap <Leader>q :q<CR>
 " shortcut for opening the explorer
 nnoremap <Leader>e :Explore<CR>
 
-" shortcut for commandT fuzzy search
-nnoremap <Leader>r :CommandT<CR>
-
 " shortcut for  emmet completion
 let g:user_emmet_leader_key='<Leader><Tab>'
 
@@ -167,7 +165,7 @@ let g:UltiSnipsJumpForwardTrigger = "<Leader>a"
 autocmd BufNewFile,BufRead *.blade.php set ft=html | set ft=phtml | set ft=blade
 
 " ignore directives for command t plugin
-let g:CommandTWildIgnore=&wildignore . "**/bower_components/*,**/node_modules/*,**/vendor/*,**/components/*"
+" let g:CommandTWildIgnore=&wildignore . "**/bower_components/*,**/node_modules/*,**/vendor/*,**/components/*"
 
 " enable neocomplete
 let g:neocomplete#enable_at_startup = 1
