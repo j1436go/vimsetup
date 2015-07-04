@@ -30,29 +30,36 @@ func ${1}(w http.ResponseWriter, r *http.Request) {
 }
 endsnippet
 
-snippet sn_sql_insert "An sql dbrms insert function."
+snippet sn_sql_all "Return all models from an RDBMS" ms
 func (s *Store) All$1s() ([]*model.${1:Name}, error) {
-	var `!p snip.rv = t[1][:1].lower()` *model.$1
-	`!p snip.rv = t[1].lower()`s := make([]*model.$1, 0)
+	var `!p 
+n_single_lower = t[1][:1].lower()
+snip.rv = n_single_lower` *model.$1
+	`!p 
+n_lower = t[1].lower()
+snip.rv = n_lower`s := make([]*model.$1, 0)
 
 	rows, err := s.db.Query(\`
-		SELECT ${2:comma separated columns} from `!p snip.rv = t[1].lower()`s
+		SELECT ${2:comma separated columns} from `!p snip.rv = n_lower`s
 	\`)
 	if err != nil {
-		return `!p snip.rv = t[1].lower()`s, err
+		return `!p snip.rv = n_lower`s, err
 	}
 	defer rows.Close()
 
 	for rows.Next() {
-		`!p snip.rv = t[1][:1].lower()`  = new(model.$1)
-		err = rows.Scan(&`!p snip.rv = t[1][:1].lower()`.Id, &`!p snip.rv = t[1][:1].lower()`.Name)
+		`!p snip.rv = n_single_lower`  = new(model.$1)
+		err = rows.Scan(`!p 
+spl = t[2].replace(" ", "").split(",")
+snip.rv = ', '.join(map(lambda s: ''.join(['&', n_single_lower, '.', s.capitalize()]), spl))
+`)
 		if err != nil {
 			log.Println(err)
 		} else {
-			`!p snip.rv = t[1].lower()`s = append(`!p snip.rv = t[1].lower()`s, `!p snip.rv = t[1][:1].lower()`)
+			`!p snip.rv = n_lower`s = append(`!p snip.rv = n_lower`s, `!p snip.rv = n_single_lower`)
 		}
 	}
-	return `!p snip.rv = t[1].lower()`s, err
+	return `!p snip.rv = n_lower`s, err
 }
 endsnippet
 
@@ -70,7 +77,7 @@ func (s *Store) Delete${1:Name}ById(id int64) (error) {
 }
 endsnippet
 
-snippet sn_sql_get_all "Retrieve models by key"
+snippet sn_sql_all_by_key "Retrieve models by key"
 func (s *Store) $1sBy(key string, val interface{}) ([]*model.${1:Name}, []error) {
 	// To store the scan of a single relation.
 	var u *model.$1
