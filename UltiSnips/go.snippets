@@ -1,6 +1,6 @@
 priority 10
 
-snippet package "Scaffolds an new main file for a package." b
+snippet sn_new "Scaffolds an new main file for a package." b
 package ${1:main}
 
 import (
@@ -12,15 +12,89 @@ func main() {
 }
 endsnippet
 
-snippet errc "Checks and logs error"
+snippet sn_err "Error check and return"
 if err != nil {
-	log.Println(err)
+	return err
 }
-${1}
 endsnippet
 
-snippet hhandler "An http handler"
+snippet sn_for "Index-based for loop"
+for i := 0; i < len(${1}); i++ {
+	${2}
+}
+endsnippet
+
+snippet sn_http_handler "An http handler"
 func ${1}(w http.ResponseWriter, r *http.Request) {
 	w.Write(${2})
+}
+endsnippet
+
+snippet sn_sql_insert "An sql dbrms insert function."
+func (s *Store) All$1s() ([]*model.${1:Name}, error) {
+	var `!p snip.rv = t[1][:1].lower()` *model.$1
+	`!p snip.rv = t[1].lower()`s := make([]*model.$1, 0)
+
+	rows, err := s.db.Query(\`
+		SELECT ${2:comma separated columns} from `!p snip.rv = t[1].lower()`s
+	\`)
+	if err != nil {
+		return `!p snip.rv = t[1].lower()`s, err
+	}
+	defer rows.Close()
+
+	for rows.Next() {
+		`!p snip.rv = t[1][:1].lower()`  = new(model.$1)
+		err = rows.Scan(&`!p snip.rv = t[1][:1].lower()`.Id, &`!p snip.rv = t[1][:1].lower()`.Name)
+		if err != nil {
+			log.Println(err)
+		} else {
+			`!p snip.rv = t[1].lower()`s = append(`!p snip.rv = t[1].lower()`s, `!p snip.rv = t[1][:1].lower()`)
+		}
+	}
+	return `!p snip.rv = t[1].lower()`s, err
+}
+endsnippet
+
+snippet sn_sql_delete "Remove a record by id from the rdbms"
+func (s *Store) Delete${1:Name}ById(id int64) (error) {
+	if id == 0 {
+		return nil, fmt.Errorf("no valid id supplied: %v", id)
+	}
+
+	_, err = s.db.Exec(\`
+		DELETE FROM `!p snip.rv = t[1].lower()`s WHERE id = ?
+	\`, id)
+
+	return err
+}
+endsnippet
+
+snippet sn_sql_get_all "Retrieve models by key"
+func (s *Store) $1sBy(key string, val interface{}) ([]*model.${1:Name}, []error) {
+	// To store the scan of a single relation.
+	var u *model.$1
+	// The model collection.
+	`!p snip.rv = t[1].lower()`s := make([]*model.$1s, 0)
+	// The collection of errors.
+	errors := make([]error, 0)
+
+	rows, err := s.db.Query(`
+		SELECT id, username, password FROM users WHERE `+key+` = ?
+	`, val)
+	if err != nil {
+		return users, errors
+	}
+	defer rows.Close()
+
+	for rows.Next() {
+		u = new(model.User)
+		err = rows.Scan(&u.Id, &u.Username, &u.Password)
+		if err != nil {
+			errors = append(errors, err)
+		} 
+	}
+
+	return users, errors
 }
 endsnippet

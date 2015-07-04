@@ -27,14 +27,13 @@ Plugin 'honza/vim-snippets'
 Plugin 'tpope/vim-surround'
 Plugin 'dhruvasagar/vim-table-mode'
 Plugin 'othree/yajs.vim'
+Plugin 'kien/ctrlp.vim'
+Plugin 'FelikZ/ctrlp-py-matcher'
 
 
 " All of your Plugins must be added before the following line
 call vundle#end()            
 filetype plugin indent on
-
-" FZF fuzzy finder
-set rtp+=~/.fzf
 
 " use visual notification instead of beep
 set visualbell
@@ -51,6 +50,23 @@ set t_ut=
 " indentation
 set autoindent
 set smartindent
+
+
+" Ignores
+set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*/node_modules/*,*/typo3/*
+
+" Useful CtrlP settings
+let g:ctrlp_lazy_update = 350
+let g:ctrlp_max_files = 0
+" Speed up CtrlP file indexing
+let g:ctrlp_user_command = {
+  \ 'types': {
+    \ 1: ['.git/', 'cd %s && git ls-files'],
+    \ },
+  \ 'fallback': 'find %s -type f'
+  \ }
+" Let py-matcher handle matching. faster
+let g:ctrlp_match_func = { 'match': 'pymatcher#PyMatch' }
 
 " show command in the last line of vim
 set showcmd
@@ -103,17 +119,14 @@ set laststatus=2
 " map leader to space
 let mapleader = "0"
 
-" shotcut for writing
-nnoremap <Leader>w :w<CR>
+" open CtrlP
+nnoremap <Leader>r :CtrlP<CR>
 
 " map search to f
 nnoremap f /
 
 " replace mapping
 nnoremap F :%s//g<Left><Left>
-
-" shortcut for quitting
-nnoremap <Leader>q :q<CR>
 
 " shortcut for opening the explorer
 nnoremap <Leader>e :Explore<CR>
@@ -147,7 +160,7 @@ nmap <Leader>t :TagbarToggle<CR>
 let g:go_fmt_command = "goimports"
 
 " disable syntastic for go
-let g:syntastic_go_checker = ''
+" let g:syntastic_go_checker = ''
 
 let g:go_auto_type_info=0
 au FileType go nmap gr <Plug>(go-run)
@@ -163,9 +176,6 @@ let g:UltiSnipsExpandTrigger = "<Leader>a"
 let g:UltiSnipsJumpForwardTrigger = "<Leader>a"
 
 autocmd BufNewFile,BufRead *.blade.php set ft=html | set ft=phtml | set ft=blade
-
-" ignore directives for command t plugin
-" let g:CommandTWildIgnore=&wildignore . "**/bower_components/*,**/node_modules/*,**/vendor/*,**/components/*"
 
 " enable neocomplete
 let g:neocomplete#enable_at_startup = 1

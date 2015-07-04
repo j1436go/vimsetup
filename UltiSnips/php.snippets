@@ -1,23 +1,70 @@
 priority 10
 
-snippet f "Function without access modifier"
+snippet sn_func "Function without access modifier"
 function ${1:name}(${2:$param}) {
 	${3:return;}
 }
 endsnippet
 
-snippet fpu "Public function"
+snippet sn_pubfunc "Public function"
 public function ${1:name}(${2:$param}) {
 	return ${3};
 }
 endsnippet
 
-snippet fpr "Private function"
+snippet sn_privfunc "Private function"
 private function ${1:name}(${2:$param}) {
 	return ${3};
 }
 endsnippet
 
-snippet dd "var_dump"
+snippet sn_dd "var_dump"
 var_dump(${1:$var});
+endsnippet
+
+snippet sn_pdo_script "PDP command-line script"
+$opts = getopt(null, ['host:', 'user:', 'pw:', 'db:']);
+
+function requiredOptsSupplied($opts) {
+	return isset($opts['host']) &&
+		isset($opts['user']) &&
+		isset($opts['pw']) &&
+		isset($opts['db']) &&
+		isset($opts['file']);
+}
+
+if (!requiredOptsSupplied($opts)) {
+	print "host, user, pw anb db arguments required.\n";
+	print "Example:\n";
+	print 'php import.php --db kreawi_online_portal --host="127.0.0.1" --pw mysql --user root';
+	exit(1);
+}
+
+try {
+	$dbh = new PDO('mysql:host='. $opts['host'] . ';dbname=' . $opts['db'], $opts['user'], $opts['pw'], array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES 'utf8'"));
+} catch(Exception $e) {
+	print "Unable to connect: " . $e->getMessage();
+	exit(1);
+}
+
+try {
+	$dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+	$dbh->beginTransaction();
+
+	$ok = $dbh->exec('');
+
+	$id = $dbh->lastInsertId();
+
+	// so smth with id
+
+	$dbh->commit();
+} catch(Exception $e) {
+	$dbh->rollback();
+	print 'Insert failed: ' . $e->getMessage();
+	exit(1);
+}
+
+print "All done.";
+exit(0);
 endsnippet
