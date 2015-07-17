@@ -18,6 +18,19 @@ if err != nil {
 }
 endsnippet
 
+snippet sn_http_fileserver "HTTP file server"
+package main
+
+import (
+	"net/http"
+)
+
+func main() {
+	http.Handle("/", http.FileServer(http.Dir(".")))
+	panic(http.ListenAndServe(":9999", nil))
+}
+endsnippet
+
 snippet sn_for "Index-based for loop"
 for i := 0; i < len(${1}); i++ {
 	${2}

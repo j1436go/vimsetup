@@ -1,0 +1,51 @@
+snippet sn_grid "A simple grid" b
+// Percentage based grid system
+@prefix: fe-;
+@cols: 12;
+@gutter: 1%;
+
+// Class container should not be nested.
+.@{prefix}container {
+	padding: 0 30px;
+}
+
+// Columns need to be enclosed in a row.
+.@{prefix}row{
+	position: relative;
+	overflow: hidden;
+	margin-left: -@gutter;
+	margin-right: -@gutter;
+	box-sizing: border-box;
+}
+
+// Matching all columns.
+div[class^='@{prefix}col'] {
+	position: relative;
+	float: left;
+	padding-left: @gutter;
+	padding-right: @gutter;
+	box-sizing: border-box;
+	min-height: 1px;
+}
+
+// Write columns recursively.
+.writeCol (@num, @i) when (@i > 0) {
+	.@{prefix}offset-@{i} {
+		margin-left: (100% / (@num / @i));
+	}
+
+	.@{prefix}col-@{i} {
+		width: (100% / (@num / @i));
+	}
+
+	.writeCol(@num, @i - 1);
+}
+.writeCol (@cols, @cols);
+
+// Media queries for mobile layout.
+@media (max-width: @bpMobile) {
+	div[class^='fe-col-'] {
+		width: 100%;
+	}
+}
+endsnippet

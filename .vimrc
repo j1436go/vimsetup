@@ -183,6 +183,9 @@ let g:neocomplete#enable_at_startup = 1
 " neocomplete config
 source ~/.vim/.neocomplete
 
+" disable slow go imports on save. have to trigger it manually: GoImports
+let go_imports_bin = ""
+
 " dont highlight cursor line
 set nocursorline
 
