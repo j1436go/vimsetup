@@ -1,6 +1,6 @@
 priority 10
 
-snippet sn_new "Scaffolds an new main file for a package." b
+snippet snNew "Scaffolds an new main file for a package." b
 package ${1:main}
 
 import (
@@ -12,7 +12,7 @@ func main() {
 }
 endsnippet
 
-snippet sn_err "Error check and return"
+snippet snErr "Error check and return"
 if err != nil {
 	return err
 }
@@ -22,7 +22,7 @@ snippet snStaticFs "Serve static files with Gorilla mux"
 r.PathPrefix("/").Handler(http.StripPrefix("/", http.FileServer(http.Dir("assets/")))) 
 endsnippet
 
-snippet sn_http_fileserver "HTTP file server"
+snippet snHttp_fileserver "HTTP file server"
 package main
 
 import (
@@ -35,19 +35,19 @@ func main() {
 }
 endsnippet
 
-snippet sn_for "Index-based for loop"
+snippet snFor "Index-based for loop"
 for i := 0; i < len(${1}); i++ {
 	${2}
 }
 endsnippet
 
-snippet sn_http_handler "An http handler"
+snippet snHttp_handler "An http handler"
 func ${1}(w http.ResponseWriter, r *http.Request) {
 	w.Write(${2})
 }
 endsnippet
 
-snippet sn_sql_all "Return all models from an RDBMS" ms
+snippet snSql_all "Return all models from an RDBMS" ms
 func (s *Store) All$1s() ([]*model.${1:Name}, error) {
 	var `!p 
 n_single_lower = t[1][:1].lower()
@@ -80,7 +80,7 @@ snip.rv = ', '.join(map(lambda s: ''.join(['&', n_single_lower, '.', s.capitaliz
 }
 endsnippet
 
-snippet sn_sql_delete "Remove a record by id from the rdbms"
+snippet snSql_delete "Remove a record by id from the rdbms"
 func (s *Store) Delete${1:Name}ById(id int64) (error) {
 	if id == 0 {
 		return nil, fmt.Errorf("no valid id supplied: %v", id)
@@ -94,7 +94,7 @@ func (s *Store) Delete${1:Name}ById(id int64) (error) {
 }
 endsnippet
 
-snippet sn_sql_all_by_key "Retrieve models by key"
+snippet snSql_all_by_key "Retrieve models by key"
 func (s *Store) $1sBy(key string, val interface{}) ([]*model.${1:Name}, []error) {
 	// To store the scan of a single relation.
 	var u *model.$1
