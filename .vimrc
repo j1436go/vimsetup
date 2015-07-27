@@ -27,8 +27,7 @@ Plugin 'honza/vim-snippets'
 Plugin 'tpope/vim-surround'
 Plugin 'dhruvasagar/vim-table-mode'
 Plugin 'othree/yajs.vim'
-Plugin 'kien/ctrlp.vim'
-Plugin 'FelikZ/ctrlp-py-matcher'
+Plugin 'junegunn/fzf'
 
 
 " All of your Plugins must be added before the following line
@@ -120,7 +119,7 @@ set laststatus=2
 let mapleader = "0"
 
 " open CtrlP
-nnoremap <Leader>r :CtrlP<CR>
+nnoremap <Leader>r :FZF<CR>
 
 " map search to f
 nnoremap f /

@@ -1,0 +1,7 @@
+snippet sn_ssh "Connects to a remote and executes commands" b
+ssh -T ${1:user@host} <<EOF
+	cd ~/app
+	git pull
+	exit
+EOF
+endsnippet

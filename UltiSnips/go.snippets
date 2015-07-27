@@ -18,6 +18,10 @@ if err != nil {
 }
 endsnippet
 
+snippet snStaticFs "Serve static files with Gorilla mux"
+r.PathPrefix("/").Handler(http.StripPrefix("/", http.FileServer(http.Dir("assets/")))) 
+endsnippet
+
 snippet sn_http_fileserver "HTTP file server"
 package main
 
