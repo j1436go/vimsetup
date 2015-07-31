@@ -5,3 +5,7 @@ ssh -T ${1:user@host} <<EOF
 	exit
 EOF
 endsnippet
+
+snippet snSedCamelCase "Converts all snake case occurences in files to camelCase"
+ls *.${1:ext} | xargs -i sed 's/\(.\)_\(.\)/\1\U\2/g'
+endsnippet

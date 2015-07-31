@@ -40,6 +40,9 @@ set visualbell
 " activate syntax specific indentation and highlighting
 syntax on
 
+" Indent wrapped lines
+set breakindent
+
 " use 256 colors in terminal
 "set t_Co=256
 
@@ -174,6 +177,7 @@ let g:UltiSnipsExpandTrigger = "<Leader>a"
 
 let g:UltiSnipsJumpForwardTrigger = "<Leader>a"
 
+autocmd BufNewFile,BufRead *.php set ft=html | set ft=phtml
 autocmd BufNewFile,BufRead *.blade.php set ft=html | set ft=phtml | set ft=blade
 
 " enable neocomplete
