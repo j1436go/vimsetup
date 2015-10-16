@@ -28,10 +28,11 @@ Plugin 'tpope/vim-surround'
 Plugin 'dhruvasagar/vim-table-mode'
 Plugin 'othree/yajs.vim'
 Plugin 'junegunn/fzf'
+Plugin 'klen/python-mode'
 
 
 " All of your Plugins must be added before the following line
-call vundle#end()            
+call vundle#end()
 filetype plugin indent on
 
 " use visual notification instead of beep
@@ -44,7 +45,7 @@ syntax on
 set breakindent
 
 " use 256 colors in terminal
-"set t_Co=256
+set t_Co=256
 
 " extend the color scheme's background to the whole terminal
 set t_ut=
@@ -88,9 +89,9 @@ set clipboard=unnamed
 
 colorscheme monokai
 
-set shiftwidth=4
+" set shiftwidth=4
 
-set tabstop=4
+" set tabstop=4
 
 set omnifunc=syntaxcomplete#Complete
 
@@ -177,7 +178,6 @@ let g:UltiSnipsExpandTrigger = "<Leader>a"
 
 let g:UltiSnipsJumpForwardTrigger = "<Leader>a"
 
-autocmd BufNewFile,BufRead *.php set ft=html | set ft=phtml
 autocmd BufNewFile,BufRead *.blade.php set ft=html | set ft=phtml | set ft=blade
 
 " enable neocomplete
@@ -192,5 +192,5 @@ let go_imports_bin = ""
 " dont highlight cursor line
 set nocursorline
 
-" this prevents vim from freezing when scrolling out of bounds 
+" this prevents vim from freezing when scrolling out of bounds
 set noeb vb t_vb=

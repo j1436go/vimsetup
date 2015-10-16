@@ -2,14 +2,14 @@ priority 10
 
 snippet snFunc "Function without access modifier"
 function ${1:name}(${2:$param}) {
-	${3:return;}
+${3:return;}
 }
 endsnippet
 
-snippet snPubfunc "Public function"
-public function ${1:name}(${2:$param}) {
-	return ${3};
-}
+snippet snErrorOutput "Activate output of PHP errors"
+ini_set('display_errors',1);
+ini_set('display_startup_errors',1);
+error_reporting(-1);
 endsnippet
 
 snippet snPrivfunc "Private function"
