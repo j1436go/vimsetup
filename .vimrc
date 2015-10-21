@@ -28,11 +28,12 @@ Plugin 'tpope/vim-surround'
 Plugin 'dhruvasagar/vim-table-mode'
 Plugin 'othree/yajs.vim'
 Plugin 'junegunn/fzf'
-Plugin 'klen/python-mode'
+Plugin 'davidhalter/jedi-vim'
 
 
 " All of your Plugins must be added before the following line
 call vundle#end()
+
 filetype plugin indent on
 
 " use visual notification instead of beep
@@ -194,3 +195,6 @@ set nocursorline
 
 " this prevents vim from freezing when scrolling out of bounds
 set noeb vb t_vb=
+
+" unmap rename
+let g:jedi#rename_command = "<leader>y"
