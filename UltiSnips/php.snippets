@@ -1,29 +1,23 @@
 priority 10
 
-snippet snFunc "Function without access modifier"
+snippet fn "Function without access modifier"
 function ${1:name}(${2:$param}) {
 ${3:return;}
 }
 endsnippet
 
-snippet snErrorOutput "Activate output of PHP errors"
+snippet errlog "Activate output of PHP errors"
 ini_set('display_errors',1);
 ini_set('display_startup_errors',1);
 error_reporting(-1);
 endsnippet
 
-snippet snPrivfunc "Private function"
-private function ${1:name}(${2:$param}) {
-	return ${3};
-}
-endsnippet
-
-snippet snDd "var_dump"
+snippet dd "var_dump"
 var_dump(${1:$var});
 exit;
 endsnippet
 
-snippet snPdo_script "PDP command-line script"
+snippet pdo "PDP command-line script"
 $opts = getopt(null, ['host:', 'user:', 'pw:', 'db:']);
 
 function requiredOptsSupplied($opts) {

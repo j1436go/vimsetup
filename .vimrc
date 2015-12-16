@@ -29,6 +29,7 @@ Plugin 'dhruvasagar/vim-table-mode'
 Plugin 'othree/yajs.vim'
 Plugin 'junegunn/fzf'
 Plugin 'davidhalter/jedi-vim'
+Plugin 'captbaritone/better-indent-support-for-php-with-html'
 
 
 " All of your Plugins must be added before the following line
@@ -88,7 +89,7 @@ set pastetoggle=<F2>
 " enable the sharing of osx's and vim's clipboard
 set clipboard=unnamed
 
-colorscheme monokai
+colorscheme jellybeans
 
 " set shiftwidth=4
 
@@ -171,7 +172,6 @@ au FileType go nmap gr <Plug>(go-run)
 au FileType go nmap gi <Plug>(go-implements)
 au FileType go nmap gb <Plug>(go-build)
 au FileType go nmap gt <Plug>(go-test)
-au FileType go nmap gt <Plug>(go-test)
 au FileType go nmap gi <Plug>(go-implements)
 
 " Sniputil completion and navigation
@@ -198,3 +198,12 @@ set noeb vb t_vb=
 
 " unmap rename
 let g:jedi#rename_command = "<leader>y"
+
+" exec python script
+nmap <Leader>p :!python %<cr>
+
+" prevents slow down on saving go files
+let g:syntastic_go_checkers = ['golint', 'govet', 'errcheck']
+
+" no need to syntax highlight super long lines
+set synmaxcol=512

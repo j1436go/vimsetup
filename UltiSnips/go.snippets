@@ -1,6 +1,6 @@
 priority 10
 
-snippet snNew "Scaffolds an new main file for a package." b
+snippet new "Scaffolds an new main file for a package." b
 package ${1:main}
 
 import (
@@ -12,17 +12,35 @@ func main() {
 }
 endsnippet
 
-snippet snErr "Error check and return"
-if err != nil {
-	return err
+snippet fn  "Function snippet" b
+func (${1:recv} ${2:T}) ${3:Name} {
+	${4:Body}
 }
 endsnippet
 
-snippet snStaticFs "Serve static files with Gorilla mux"
-r.PathPrefix("/").Handler(http.StripPrefix("/", http.FileServer(http.Dir("assets/")))) 
+snippet type  "Struct declaration" b
+type ${1:type} struct {
+	${2:Field}
+}
 endsnippet
 
-snippet snHttp_fileserver "HTTP file server"
+snippet fnserve "http.Handler interface func" b
+func (${1:h}) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+	rw.Write(${2:data})
+}
+endsnippet
+
+snippet err "Error check and return"
+if err != nil {
+	${1:return err}
+}
+endsnippet
+
+snippet staticFs "Serve static files with Gorilla mux"
+r.PathPrefix("/").Handler(http.StripPrefix("/", http.FileServer(http.Dir("assets/"))))
+endsnippet
+
+snippet http_fileserver "HTTP file server"
 package main
 
 import (
@@ -35,71 +53,71 @@ func main() {
 }
 endsnippet
 
-snippet snFor "Index-based for loop"
-for i := 0; i < len(${1}); i++ {
+snippet for "Index-based for loop"
+for _, v := range ${1} {
 	${2}
 }
 endsnippet
 
-snippet snHttp_handler "An http handler"
+snippet http_handler "An http handler"
 func ${1}(w http.ResponseWriter, r *http.Request) {
 	w.Write(${2})
 }
 endsnippet
 
-snippet snSql_all "Return all models from an RDBMS" ms
+snippet sql_all "Return all models from an RDBMS" ms
 func (s *Store) All$1s() ([]*model.${1:Name}, error) {
-	var `!p 
+	var `!p
 n_single_lower = t[1][:1].lower()
 snip.rv = n_single_lower` *model.$1
-	`!p 
+	`!p
 n_lower = t[1].lower()
 snip.rv = n_lower`s := make([]*model.$1, 0)
 
 	rows, err := s.db.Query(\`
-		SELECT ${2:comma separated columns} from `!p snip.rv = n_lower`s
+		SELECT ${2:comma separated columns} from `!p ip.rv = n_lower`s
 	\`)
 	if err != nil {
-		return `!p snip.rv = n_lower`s, err
+		return `!p ip.rv = n_lower`s, err
 	}
 	defer rows.Close()
 
 	for rows.Next() {
-		`!p snip.rv = n_single_lower`  = new(model.$1)
-		err = rows.Scan(`!p 
+		`!p ip.rv = n_single_lower`  = new(model.$1)
+		err = rows.Scan(`!p
 spl = t[2].replace(" ", "").split(",")
 snip.rv = ', '.join(map(lambda s: ''.join(['&', n_single_lower, '.', s.capitalize()]), spl))
 `)
 		if err != nil {
 			log.Println(err)
 		} else {
-			`!p snip.rv = n_lower`s = append(`!p snip.rv = n_lower`s, `!p snip.rv = n_single_lower`)
+			`!p ip.rv = n_lower`s = append(`!p ip.rv = n_lower`s, `!p ip.rv = n_single_lower`)
 		}
 	}
-	return `!p snip.rv = n_lower`s, err
+	return `!p ip.rv = n_lower`s, err
 }
 endsnippet
 
-snippet snSql_delete "Remove a record by id from the rdbms"
+snippet sql_delete "Remove a record by id from the rdbms"
 func (s *Store) Delete${1:Name}ById(id int64) (error) {
 	if id == 0 {
 		return nil, fmt.Errorf("no valid id supplied: %v", id)
 	}
 
 	_, err = s.db.Exec(\`
-		DELETE FROM `!p snip.rv = t[1].lower()`s WHERE id = ?
+		DELETE FROM `!p ip.rv = t[1].lower()`s WHERE id = ?
 	\`, id)
 
 	return err
 }
 endsnippet
 
-snippet snSql_all_by_key "Retrieve models by key"
+snippet sql_all_by_key "Retrieve models by key"
 func (s *Store) $1sBy(key string, val interface{}) ([]*model.${1:Name}, []error) {
 	// To store the scan of a single relation.
 	var u *model.$1
 	// The model collection.
-	`!p snip.rv = t[1].lower()`s := make([]*model.$1s, 0)
+	`!p ip.rv = t[1].lower()`s := make([]*model.$1s, 0)
 	// The collection of errors.
 	errors := make([]error, 0)
 
@@ -116,7 +134,7 @@ func (s *Store) $1sBy(key string, val interface{}) ([]*model.${1:Name}, []error)
 		err = rows.Scan(&u.Id, &u.Username, &u.Password)
 		if err != nil {
 			errors = append(errors, err)
-		} 
+		}
 	}
 
 	return users, errors
