@@ -1,6 +1,10 @@
 set nocompatible
+"
 " for vundle
 filetype off
+
+" activate syntax specific indentation and highlighting
+syntax on
 
 
 " set the runtime path to include Vundle and initialize
@@ -14,8 +18,7 @@ Plugin 'editorconfig/editorconfig-vim'
 Plugin 'mattn/emmet-vim'
 Plugin 'othree/html5.vim'
 Plugin 'vim-scripts/matchit.zip'
-Plugin 'Shougo/neocomplete.vim'
-Plugin 'scrooloose/syntastic'
+Plugin 'Valloric/YouCompleteMe'
 Plugin 'majutsushi/tagbar'
 Plugin 'SirVer/ultisnips'
 Plugin 'xsbeats/vim-blade'
@@ -30,6 +33,7 @@ Plugin 'othree/yajs.vim'
 Plugin 'junegunn/fzf'
 Plugin 'davidhalter/jedi-vim'
 Plugin 'captbaritone/better-indent-support-for-php-with-html'
+Plugin 'leafgarland/typescript-vim'
 
 
 " All of your Plugins must be added before the following line
@@ -39,9 +43,6 @@ filetype plugin indent on
 
 " use visual notification instead of beep
 set visualbell
-
-" activate syntax specific indentation and highlighting
-syntax on
 
 " Indent wrapped lines
 set breakindent
@@ -90,6 +91,10 @@ set pastetoggle=<F2>
 set clipboard=unnamed
 
 colorscheme jellybeans
+" colorscheme acme
+
+" dark background works better with the acme colorscheme
+set background=dark
 
 " set shiftwidth=4
 
@@ -180,12 +185,6 @@ let g:UltiSnipsExpandTrigger = "<Leader>a"
 let g:UltiSnipsJumpForwardTrigger = "<Leader>a"
 
 autocmd BufNewFile,BufRead *.blade.php set ft=html | set ft=phtml | set ft=blade
-
-" enable neocomplete
-let g:neocomplete#enable_at_startup = 1
-
-" neocomplete config
-source ~/.vim/.neocomplete
 
 " disable slow go imports on save. have to trigger it manually: GoImports
 let go_imports_bin = ""
