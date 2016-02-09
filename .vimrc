@@ -14,26 +14,19 @@ call vundle#begin()
 
 Plugin 'gmarik/Vundle.vim'
 Plugin 'rking/ag.vim'
+Plugin 'junegunn/fzf'
 Plugin 'editorconfig/editorconfig-vim'
 Plugin 'mattn/emmet-vim'
 Plugin 'othree/html5.vim'
 Plugin 'vim-scripts/matchit.zip'
 Plugin 'Valloric/YouCompleteMe'
-Plugin 'majutsushi/tagbar'
 Plugin 'SirVer/ultisnips'
-Plugin 'xsbeats/vim-blade'
-Plugin 'tpope/vim-fugitive'
-Plugin 'fatih/vim-go'
-Plugin 'groenewege/vim-less'
-Plugin 'tpope/vim-repeat'
 Plugin 'honza/vim-snippets'
-Plugin 'tpope/vim-surround'
-Plugin 'dhruvasagar/vim-table-mode'
-Plugin 'othree/yajs.vim'
-Plugin 'junegunn/fzf'
+Plugin 'fatih/vim-go'
 Plugin 'davidhalter/jedi-vim'
 Plugin 'captbaritone/better-indent-support-for-php-with-html'
 Plugin 'leafgarland/typescript-vim'
+Plugin 'dart-lang/dart-vim-plugin'
 
 
 " All of your Plugins must be added before the following line
@@ -61,16 +54,6 @@ set smartindent
 " Ignores
 set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*/node_modules/*,*/typo3/*
 
-" Useful CtrlP settings
-let g:ctrlp_lazy_update = 350
-let g:ctrlp_max_files = 0
-" Speed up CtrlP file indexing
-let g:ctrlp_user_command = {
-  \ 'types': {
-    \ 1: ['.git/', 'cd %s && git ls-files'],
-    \ },
-  \ 'fallback': 'find %s -type f'
-  \ }
 " Let py-matcher handle matching. faster
 let g:ctrlp_match_func = { 'match': 'pymatcher#PyMatch' }
 
@@ -158,16 +141,17 @@ set directory=~/.vim/swap//
 set undodir=~/.vim/undo//
 
 " remapping of umlauts
-map ö [
-map ä ]
-map Ö {
-map Ä }
+" ä
+imap <Char-196> }
+" ö
+imap <Char-214> {
+" Ä
+imap <Char-228> ]
+" Ö
+imap <Char-246> [
 
 " tagbar toggle
 nmap <Leader>t :TagbarToggle<CR>
-
-" go-vim specific settings
-let g:go_fmt_command = "goimports"
 
 " disable syntastic for go
 " let g:syntastic_go_checker = ''
@@ -202,7 +186,13 @@ let g:jedi#rename_command = "<leader>y"
 nmap <Leader>p :!python %<cr>
 
 " prevents slow down on saving go files
-let g:syntastic_go_checkers = ['golint', 'govet', 'errcheck']
+" let g:syntastic_go_checkers = ['golint', 'govet', 'errcheck']
 
 " no need to syntax highlight super long lines
 set synmaxcol=512
+
+" use typescript syntax for .ts files
+au BufNewFile,BufRead *.ts set ft=typescript
+"
+" use dart syntax for .dart files
+au BufNewFile,BufRead *.dart set ft=dart
