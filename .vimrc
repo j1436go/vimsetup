@@ -10,8 +10,8 @@ Plugin 'junegunn/fzf'
 Plugin 'editorconfig/editorconfig-vim'
 Plugin 'mattn/emmet-vim'
 Plugin 'SirVer/ultisnips'
-Plugin 'honza/vim-snippets'
 Plugin 'fatih/vim-go'
+Plugin 'leafgarland/typescript-vim'
 Plugin 'Valloric/YouCompleteMe'
 call vundle#end()
 
@@ -33,7 +33,6 @@ set t_ut=
 " indentation
 set autoindent
 set smartindent
-
 
 " Ignores
 set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*/node_modules/*,*/typo3/*
