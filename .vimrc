@@ -13,6 +13,7 @@ Plugin 'SirVer/ultisnips'
 Plugin 'fatih/vim-go'
 Plugin 'leafgarland/typescript-vim'
 Plugin 'Valloric/YouCompleteMe'
+Plugin 'j1436go/nofrils'
 call vundle#end()
 
 filetype plugin indent on
