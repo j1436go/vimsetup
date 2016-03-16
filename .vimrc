@@ -30,6 +30,9 @@ set t_Co=256
 " extend the color scheme's background to the whole terminal
 set t_ut=
 
+" color scheme
+colorscheme nofrils-dark
+
 " indentation
 set autoindent
 set smartindent
@@ -45,9 +48,6 @@ set nostartofline
 
 " switch between paste mode with F2
 set pastetoggle=<F2>
-
-" dark background works better with the acme colorscheme
-set background=dark
 
 " set shiftwidth=4
 
