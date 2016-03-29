@@ -139,3 +139,6 @@ set noeb vb t_vb=
 set synmaxcol=512
 
 let g:go_fmt_command = "goimports"
+
+" typescript syntax
+au BufNewFile,BufRead *.ts set filetype=typescript
