@@ -1,5 +1,6 @@
-swap
-undo
-backup
+swap/*
+undo/*
+backup/*
 bundle/YouCompleteMe
 .netrwhist
+!.gitkeep
