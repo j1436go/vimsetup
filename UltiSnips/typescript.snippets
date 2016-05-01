@@ -1,0 +1,54 @@
+snippet ngcomp "An angular 2 components" b
+import {Component} from "angular2/core";
+
+@Component({
+  selector: "${1:my-component}",
+  styles: [`
+  `],
+  providers: [],
+  template: `
+  `,
+  directives: [ROUTER_DIRECTIVES],
+  pipes: []
+})
+@RouteConfig([
+  {
+    path:"/",
+    name: "WelcomeComponent",
+    component: WelcomeComponent,
+    data: {
+      title: "Welcome",
+    }
+  }
+])
+export class ${2:My}Component {
+  constructor(
+    private router: Router
+  ) {
+    this.router.subscribe(() => null);
+  }
+}
+endsnippet
+
+snippet ngservice "An angular 2 service" b
+import {Injectable} from "angular2/core";
+import {Observable} from "rxjs/Observable";
+import {Http, Response} from "angular2/http";
+
+@Injectable()
+export class ${1:My}Service {
+  constructor(
+	private http: Http
+  ){}
+
+  get(id: number) {
+    return this.http.get(${2:http://example.com})
+      .map(res => <${3:T}> res.json()[0])
+      .catch(this.handleErr.bind(this));
+  }
+
+  handleErr(error: Response) {
+    return Observable.throw(error.json().error || 'Server error');
+  }
+}
+endsnippet

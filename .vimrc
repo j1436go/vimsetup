@@ -32,7 +32,8 @@ set t_Co=256
 set t_ut=
 
 " color scheme
-colorscheme nofrils-dark
+" colorscheme nofrils-dark
+colorscheme monokai
 
 " indentation
 set autoindent
@@ -142,3 +143,6 @@ let g:go_fmt_command = "goimports"
 
 " typescript syntax
 au BufNewFile,BufRead *.ts set filetype=typescript
+
+" requires github.com/j1436go/ggl
+command -nargs=* Ggl !ggl <args>
