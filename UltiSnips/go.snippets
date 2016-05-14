@@ -12,7 +12,7 @@ func main() {
 }
 endsnippet
 
-snippet fn  "Function snippet" b
+snippet meth "Function snippet" b
 func (${1:recv} ${2:T}) ${3:Name} {
 	${4:Body}
 }
@@ -24,7 +24,7 @@ type ${1:type} struct {
 }
 endsnippet
 
-snippet fnserve "http.Handler interface func" b
+snippet servemeth "http.Handler interface func" b
 func (${1:h}) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	rw.Write(${2:data})
 }
@@ -34,10 +34,11 @@ snippet err "Error check and return"
 if err != nil {
 	${1:return err}
 }
+$2
 endsnippet
 
-snippet staticFs "Serve static files with Gorilla mux"
-r.PathPrefix("/").Handler(http.StripPrefix("/", http.FileServer(http.Dir("assets/"))))
+snippet statichandler "Serve static files with Gorilla mux"
+http.Handle("${1:Path}", http.StripPrefix("$1", http.FileServer(http.Dir("$2"))))
 endsnippet
 
 snippet http_fileserver "HTTP file server"
@@ -59,66 +60,68 @@ for _, v := range ${1} {
 }
 endsnippet
 
-snippet http_handler "An http handler"
-func ${1}(w http.ResponseWriter, r *http.Request) {
-	w.Write(${2})
+snippet handler "An http handler"
+func $1(w http.ResponseWriter, r *http.Request) {
+	$2
 }
 endsnippet
 
-snippet sql_all "Return all models from an RDBMS" ms
+snippet db_all "Return all records" ms
 func (s *Store) All$1s() ([]*model.${1:Name}, error) {
 	var `!p
-n_single_lower = t[1][:1].lower()
-snip.rv = n_single_lower` *model.$1
+single_lower = t[1][:1].lower()
+snip.rv = single_lower` *model.$1
 	`!p
-n_lower = t[1].lower()
-snip.rv = n_lower`s := make([]*model.$1, 0)
+lower = t[1].lower()
+snip.rv = lower`s := make([]*model.$1, 0)
 
 	rows, err := s.db.Query(\`
-		SELECT ${2:comma separated columns} from `!p ip.rv = n_lower`s
+		SELECT ${2:comma separated columns} from `!p snip.rv = lower`s
 	\`)
 	if err != nil {
-		return `!p ip.rv = n_lower`s, err
+		return `!p snip.rv = lower`s, err
 	}
 	defer rows.Close()
 
 	for rows.Next() {
-		`!p ip.rv = n_single_lower`  = new(model.$1)
+		`!p snip.rv = single_lower`  = new(model.$1)
 		err = rows.Scan(`!p
 spl = t[2].replace(" ", "").split(",")
-snip.rv = ', '.join(map(lambda s: ''.join(['&', n_single_lower, '.', s.capitalize()]), spl))
+snip.rv = ', '.join(map(lambda s: ''.join(['&', single_lower, '.', s.capitalize()]), spl))
 `)
 		if err != nil {
 			log.Println(err)
 		} else {
-			`!p ip.rv = n_lower`s = append(`!p ip.rv = n_lower`s, `!p ip.rv = n_single_lower`)
+			`!p snip.rv = lower`s = append(`!p snip.rv = lower`s, `!p snip.rv = single_lower`)
 		}
 	}
-	return `!p ip.rv = n_lower`s, err
+	return `!p snip.rv = lower`s, err
 }
 endsnippet
 
-snippet sql_delete "Remove a record by id from the rdbms"
-func (s *Store) Delete${1:Name}ById(id int64) (error) {
+snippet db_delete "Remove a record by id"
+func (s *Store) Delete${1:Name}ById(db *sql.DB, id int64) (error) {
 	if id == 0 {
 		return nil, fmt.Errorf("no valid id supplied: %v", id)
 	}
 
 	_, err = s.db.Exec(\`
-		DELETE FROM `!p ip.rv = t[1].lower()`s WHERE id = ?
+		DELETE FROM `!p snip.rv = t[1].lower()`s WHERE id = ?
 	\`, id)
 
 	return err
 }
 endsnippet
 
-snippet sql_all_by_key "Retrieve models by key"
+snippet db_all_by_key "Retrieve models where key matches val"
+	// NOT YET IMPLEMENTED
 func (s *Store) $1sBy(key string, val interface{}) ([]*model.${1:Name}, []error) {
-	// To store the scan of a single relation.
-	var u *model.$1
-	// The model collection.
-	`!p ip.rv = t[1].lower()`s := make([]*model.$1s, 0)
-	// The collection of errors.
+	var `!p
+single_lower = t[1][:1].lower()
+snip.rv = single_lower` *model.$1
+
+	`!p snip.rv = t[1].lower()`s := make([]*model.$1s, 0)
+
 	errors := make([]error, 0)
 
 	rows, err := s.db.Query(`
