@@ -4,11 +4,11 @@ snippet new "Scaffolds an new main file for a package." b
 package ${1:main}
 
 import (
-	"${2:fmt}"
+	"fmt"
 )
 
 func main() {
-	${3}
+	${2}
 }
 endsnippet
 
@@ -18,8 +18,8 @@ func (${1:recv} ${2:T}) ${3:Name} {
 }
 endsnippet
 
-snippet type  "Struct declaration" b
-type ${1:type} struct {
+snippet struct  "Struct declaration" b
+type ${1:Type} struct {
 	${2:Field}
 }
 endsnippet
@@ -37,20 +37,30 @@ if err != nil {
 $2
 endsnippet
 
-snippet statichandler "Serve static files with Gorilla mux"
+snippet statichandler "Serve static files"
 http.Handle("${1:Path}", http.StripPrefix("$1", http.FileServer(http.Dir("$2"))))
 endsnippet
 
-snippet http_fileserver "HTTP file server"
+snippet new_fileserver "HTTP file server"
 package main
 
 import (
+	"flag"
+	"log"
 	"net/http"
 )
 
+var (
+	listenAddr = flag.String("addr", "localhost:8899", "Listen address")
+)
+
 func main() {
+	flag.Parse()
+
 	http.Handle("/", http.FileServer(http.Dir(".")))
-	panic(http.ListenAndServe(":9999", nil))
+
+	log.Printf("http: listening on %s", *listenAddr)
+	panic(http.ListenAndServe(*listenAddr, nil))
 }
 endsnippet
 
@@ -66,14 +76,37 @@ func $1(w http.ResponseWriter, r *http.Request) {
 }
 endsnippet
 
+snippet db_create "Create a new record" ms
+// Create$1s will create a new record and return
+// the generated primary key.
+func (s *Store) Create$1s(`!p
+initial = t[1][:1].lower()
+snip.rv = initial` *models.${1:Name}) (int64, error) {
+	var id int64
+
+	return id, s.db.QueryRow(\`
+		INSERT INTO `!p snip.rv = t[1].lower()` (
+			${2:comma separated columns}
+		) VALUES (
+			`!p
+l = map(lambda (i, arg): "${0}".format(i+1), enumerate(t[2].replace(" ", "").split(',')))
+snip.rv = ", ".join(l)`
+		) RETURNING id
+	\`, `!p
+spl = t[2].replace(" ", "").split(",")
+snip.rv = ', '.join(map(lambda s: ''.join([initial, '.', s.capitalize()]), spl))
+`).Scan(&id)
+}
+endsnippet
+
 snippet db_all "Return all records" ms
-func (s *Store) All$1s() ([]*model.${1:Name}, error) {
+func (s *Store) All$1s() ([]*models.${1:Name}, error) {
 	var `!p
-single_lower = t[1][:1].lower()
-snip.rv = single_lower` *model.$1
+initial = t[1][:1].lower()
+snip.rv = initial` *models.$1
 	`!p
 lower = t[1].lower()
-snip.rv = lower`s := make([]*model.$1, 0)
+snip.rv = lower`s := make([]*models.$1, 0)
 
 	rows, err := s.db.Query(\`
 		SELECT ${2:comma separated columns} from `!p snip.rv = lower`s
@@ -84,15 +117,15 @@ snip.rv = lower`s := make([]*model.$1, 0)
 	defer rows.Close()
 
 	for rows.Next() {
-		`!p snip.rv = single_lower`  = new(model.$1)
+		`!p snip.rv = initial`  = new(models.$1)
 		err = rows.Scan(`!p
 spl = t[2].replace(" ", "").split(",")
-snip.rv = ', '.join(map(lambda s: ''.join(['&', single_lower, '.', s.capitalize()]), spl))
+snip.rv = ', '.join(map(lambda s: ''.join(['&', initial, '.', s.capitalize()]), spl))
 `)
 		if err != nil {
 			log.Println(err)
 		} else {
-			`!p snip.rv = lower`s = append(`!p snip.rv = lower`s, `!p snip.rv = single_lower`)
+			`!p snip.rv = lower`s = append(`!p snip.rv = lower`s, `!p snip.rv = initial`)
 		}
 	}
 	return `!p snip.rv = lower`s, err
@@ -101,12 +134,8 @@ endsnippet
 
 snippet db_delete "Remove a record by id"
 func (s *Store) Delete${1:Name}ById(db *sql.DB, id int64) (error) {
-	if id == 0 {
-		return nil, fmt.Errorf("no valid id supplied: %v", id)
-	}
-
 	_, err = s.db.Exec(\`
-		DELETE FROM `!p snip.rv = t[1].lower()`s WHERE id = ?
+		DELETE FROM `!p snip.rv = t[1].lower()`s WHERE id = $1
 	\`, id)
 
 	return err
@@ -115,17 +144,17 @@ endsnippet
 
 snippet db_all_by_key "Retrieve models where key matches val"
 	// NOT YET IMPLEMENTED
-func (s *Store) $1sBy(key string, val interface{}) ([]*model.${1:Name}, []error) {
+func (s *Store) $1sBy(key string, val interface{}) ([]*models.${1:Name}, []error) {
 	var `!p
-single_lower = t[1][:1].lower()
-snip.rv = single_lower` *model.$1
+initial = t[1][:1].lower()
+snip.rv = initial` *models.$1
 
-	`!p snip.rv = t[1].lower()`s := make([]*model.$1s, 0)
+	`!p snip.rv = t[1].lower()`s := make([]*models.$1s, 0)
 
 	errors := make([]error, 0)
 
 	rows, err := s.db.Query(`
-		SELECT id, username, password FROM users WHERE `+key+` = ?
+		SELECT id, username, password FROM users WHERE `+key+` = $1
 	`, val)
 	if err != nil {
 		return users, errors
@@ -133,7 +162,7 @@ snip.rv = single_lower` *model.$1
 	defer rows.Close()
 
 	for rows.Next() {
-		u = new(model.User)
+		u = new(models.User)
 		err = rows.Scan(&u.Id, &u.Username, &u.Password)
 		if err != nil {
 			errors = append(errors, err)
