@@ -110,16 +110,6 @@ set directory=~/.vim/swap//
 
 set undodir=~/.vim/undo//
 
-" remapping of umlauts to parens / brackets
-" ä
-imap <Char-196> }
-" ö
-imap <Char-214> {
-" Ä
-imap <Char-228> ]
-" Ö
-imap <Char-246> [
-
 " tagbar toggle
 nmap <Leader>t :TagbarToggle<CR>
 

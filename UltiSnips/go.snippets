@@ -70,21 +70,30 @@ for _, v := range ${1} {
 }
 endsnippet
 
-snippet handler "An http handler"
+snippet handlefunc "A HTTP handler func"
 func $1(w http.ResponseWriter, r *http.Request) {
 	$2
+}
+endsnippet
+
+snippet middleware "A http middleware func"
+func ${1}(h http.Handler) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		${2}
+		h.ServeHTTP(w, r)
+	})
 }
 endsnippet
 
 snippet db_create "Create a new record" ms
 // Create$1s will create a new record and return
 // the generated primary key.
-func (s *Store) Create$1s(`!p
+func (db *Store) Create$1s(`!p
 initial = t[1][:1].lower()
 snip.rv = initial` *models.${1:Name}) (int64, error) {
 	var id int64
 
-	return id, s.db.QueryRow(\`
+	return id, db.QueryRow(\`
 		INSERT INTO `!p snip.rv = t[1].lower()` (
 			${2:comma separated columns}
 		) VALUES (
@@ -100,7 +109,7 @@ snip.rv = ', '.join(map(lambda s: ''.join([initial, '.', s.capitalize()]), spl))
 endsnippet
 
 snippet db_all "Return all records" ms
-func (s *Store) All$1s() ([]*models.${1:Name}, error) {
+func (db *Store) All$1s() ([]*models.${1:Name}, error) {
 	var `!p
 initial = t[1][:1].lower()
 snip.rv = initial` *models.$1
@@ -108,7 +117,7 @@ snip.rv = initial` *models.$1
 lower = t[1].lower()
 snip.rv = lower`s := make([]*models.$1, 0)
 
-	rows, err := s.db.Query(\`
+	rows, err := db.Query(\`
 		SELECT ${2:comma separated columns} from `!p snip.rv = lower`s
 	\`)
 	if err != nil {
@@ -133,8 +142,8 @@ snip.rv = ', '.join(map(lambda s: ''.join(['&', initial, '.', s.capitalize()]), 
 endsnippet
 
 snippet db_delete "Remove a record by id"
-func (s *Store) Delete${1:Name}ById(db *sql.DB, id int64) (error) {
-	_, err = s.db.Exec(\`
+func (db *Store) Delete${1:Name}ById(db *sql.DB, id int64) (error) {
+	_, err = db.Exec(\`
 		DELETE FROM `!p snip.rv = t[1].lower()`s WHERE id = $1
 	\`, id)
 
