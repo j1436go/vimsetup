@@ -14,6 +14,7 @@ Plugin 'fatih/vim-go'
 Plugin 'leafgarland/typescript-vim'
 Plugin 'j1436go/nofrils'
 Plugin 'vim-scripts/rest.vim'
+Plugin 'Shougo/neocomplete.vim'
 call vundle#end()
 
 filetype plugin indent on
@@ -135,3 +136,7 @@ au BufNewFile,BufRead *.ts set filetype=typescript
 command -nargs=* Ggl !ggl <args>
 
 let g:go_fmt_command = "goimports"
+
+let g:neocomplete#enable_at_startup = 1
+let g:neocomplete#sources#syntax#min_keyword_length = 2
+inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
