@@ -5,7 +5,6 @@ set rtp+=~/.vim/bundle/Vundle.vim
 
 call vundle#begin()
 Plugin 'gmarik/Vundle.vim'
-Plugin 'artur-shaik/vim-javacomplete2'
 Plugin 'rking/ag.vim'
 Plugin 'junegunn/fzf'
 Plugin 'editorconfig/editorconfig-vim'
@@ -13,10 +12,8 @@ Plugin 'mattn/emmet-vim'
 Plugin 'SirVer/ultisnips'
 Plugin 'fatih/vim-go'
 Plugin 'leafgarland/typescript-vim'
-Plugin 'Valloric/YouCompleteMe'
 Plugin 'j1436go/nofrils'
 Plugin 'vim-scripts/rest.vim'
-Plugin 'rdnetto/YCM-Generator'
 call vundle#end()
 
 filetype plugin indent on
