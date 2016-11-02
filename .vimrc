@@ -5,6 +5,7 @@ set rtp+=~/.vim/bundle/Vundle.vim
 
 call vundle#begin()
 Plugin 'gmarik/Vundle.vim'
+Plugin 'artur-shaik/vim-javacomplete2'
 Plugin 'rking/ag.vim'
 Plugin 'junegunn/fzf'
 Plugin 'editorconfig/editorconfig-vim'
@@ -14,6 +15,8 @@ Plugin 'fatih/vim-go'
 Plugin 'leafgarland/typescript-vim'
 Plugin 'Valloric/YouCompleteMe'
 Plugin 'j1436go/nofrils'
+Plugin 'vim-scripts/rest.vim'
+Plugin 'rdnetto/YCM-Generator'
 call vundle#end()
 
 filetype plugin indent on
@@ -117,7 +120,6 @@ au FileType go nmap gr <Plug>(go-run)
 au FileType go nmap gi <Plug>(go-implements)
 au FileType go nmap gb <Plug>(go-build)
 au FileType go nmap gt <Plug>(go-test)
-au FileType go nmap gi <Plug>(go-implements)
 
 " Sniputil completion and navigation
 let g:UltiSnipsExpandTrigger = "<Leader>a"
@@ -129,10 +131,10 @@ set noeb vb t_vb=
 " no need to syntax highlight super long lines
 set synmaxcol=512
 
-let g:go_fmt_command = "goimports"
-
 " typescript syntax
 au BufNewFile,BufRead *.ts set filetype=typescript
 
 " requires github.com/j1436go/ggl
 command -nargs=* Ggl !ggl <args>
+
+let g:go_fmt_command = "goimports"
