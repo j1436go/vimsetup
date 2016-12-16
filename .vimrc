@@ -15,6 +15,8 @@ Plugin 'leafgarland/typescript-vim'
 Plugin 'j1436go/nofrils'
 Plugin 'vim-scripts/rest.vim'
 Plugin 'Shougo/neocomplete.vim'
+Plugin 'posva/vim-vue'
+Plugin 'davidhalter/jedi-vim'
 call vundle#end()
 
 filetype plugin indent on
@@ -132,6 +134,9 @@ set synmaxcol=512
 " typescript syntax
 au BufNewFile,BufRead *.ts set filetype=typescript
 
+" vue syntax
+au BufNewFile,BufRead *.vue set filetype=vue
+
 " requires github.com/j1436go/ggl
 command -nargs=* Ggl !ggl <args>
 
@@ -140,3 +145,8 @@ let g:go_fmt_command = "goimports"
 let g:neocomplete#enable_at_startup = 1
 let g:neocomplete#sources#syntax#min_keyword_length = 2
 inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
+
+let g:jedi#auto_vim_configuration = 0
+
+" Copy to clipboard
+xnoremap <leader>c <esc>:'<,'>:w !xsel -b<CR><CR>
