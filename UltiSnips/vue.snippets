@@ -1,0 +1,29 @@
+snippet cl "Console log" b
+console.log($1);
+endsnippet
+
+snippet compo "Vue components" b
+<template>
+<div>
+$1
+</div>
+</template>
+
+<script>
+export default {
+	name: "$2",
+	created: function() {
+	},
+	props: {
+		title: String
+	},
+	data: function() {
+		return {
+			$3
+		};
+	},
+	methods: {
+	}
+}
+</script>
+endsnippet
