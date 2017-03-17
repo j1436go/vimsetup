@@ -1,6 +1,6 @@
 set nocompatible
 
-" set the runtime path to include Vundle and initialize
+" set the runtime path to include Vundle and user bin dir
 set rtp+=~/.vim/bundle/Vundle.vim
 
 call vundle#begin()
@@ -12,7 +12,7 @@ Plugin 'mattn/emmet-vim'
 Plugin 'SirVer/ultisnips'
 Plugin 'fatih/vim-go'
 Plugin 'leafgarland/typescript-vim'
-Plugin 'j1436go/nofrils'
+Plugin 'jgrossophoff/vimcolors'
 Plugin 'vim-scripts/rest.vim'
 Plugin 'Shougo/neocomplete.vim'
 Plugin 'posva/vim-vue'
@@ -21,6 +21,8 @@ call vundle#end()
 
 filetype plugin indent on
 set omnifunc=syntaxcomplete#Complete
+
+syntax on
 
 " use visual notification instead of beep
 set visualbell
@@ -35,8 +37,7 @@ set t_Co=256
 set t_ut=
 
 " color scheme
-" colorscheme nofrils-dark
-colorscheme monokai
+colorscheme vimcolors
 
 " indentation
 set autoindent
@@ -85,8 +86,14 @@ set laststatus=2
 " map leader to space
 let mapleader = "0"
 
-" open CtrlP
+" open fzf file searcher
 nnoremap <Leader>r :FZF<CR>
+
+" open netrw in a horizontal split
+nnoremap <Leader>s :Sex<CR>
+"
+" open netrw in a vertical split
+nnoremap <Leader>v :Vex<CR>
 
 " map search to f
 nnoremap f /
@@ -120,6 +127,9 @@ au FileType go nmap gr <Plug>(go-run)
 au FileType go nmap gi <Plug>(go-implements)
 au FileType go nmap gb <Plug>(go-build)
 au FileType go nmap gt <Plug>(go-test)
+
+" execute current python script
+au FileType python map gr :!python3 %<CR>
 
 " Sniputil completion and navigation
 let g:UltiSnipsExpandTrigger = "<Leader>a"
