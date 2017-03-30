@@ -86,14 +86,20 @@ set laststatus=2
 " map leader to space
 let mapleader = "0"
 
+" copy to selection to clipboard
+xnoremap <leader>c <esc>:'<,'>:w !xsel -b<CR><CR>
+
+" Paste with leader (alternative to iF2^Shiftv)
+nnoremap <Leader>v :r !xsel<CR>
+
 " open fzf file searcher
 nnoremap <Leader>r :FZF<CR>
 
 " open netrw in a horizontal split
-nnoremap <Leader>s :Sex<CR>
+nnoremap <Leader>sh :Sex<CR>
 "
 " open netrw in a vertical split
-nnoremap <Leader>v :Vex<CR>
+nnoremap <Leader>sv :Vex<CR>
 
 " map search to f
 nnoremap f /
@@ -157,6 +163,3 @@ let g:neocomplete#sources#syntax#min_keyword_length = 2
 inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
 
 let g:jedi#auto_vim_configuration = 0
-
-" Copy to clipboard
-xnoremap <leader>c <esc>:'<,'>:w !xsel -b<CR><CR>
